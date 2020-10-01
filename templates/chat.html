@@ -4,24 +4,69 @@
     <meta charset="UTF-8">
     <title>My Chat App</title>
 </head>
+<link rel="stylesheet" href="static/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<style>
+        .main{
+          background: rgba(255, 255, 255, 0.05);
+          padding:30px;
+          border-radius: 0.2em;
+          box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
+        }
+        .btn-success{
+            background: rgba(255, 255, 255, 0.05);
+            border-color: violet;
+        }
+        .btn-success:hover{
+            background: rgba(255, 255, 255, 0.2);
+            border-color: violet;
+        }
+        .chat{
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+        label{
+            color:white;
+        }
+        .input-text{
+            background-color:  rgba(255, 255, 255, 0.3);
+        }
+        .input-text:focus{
+            border-color:  rgba(255, 255, 255, 0.5);
+        }
+        .form-row{
+            margin: 3px;
+        }
+        h1{
+            position: absolute;
+            top:5%;
+        }
+</style>
 <body>
-<h1>Welcome to chat room {{ room }}</h1>
 
-<div id="messages"></div>
+<div class="container main">
+    <div class="chat">
+        <div id="messages" ></div>
 
-<form id="message_input_form">
-    <input type="text" id="message_input" placeholder="Enter your message here">
-    <button type="submit">Send</button>
-</form>
-</body>
+        <form id="message_input_form">
+            <input type="text" id="message_input" placeholder="Enter your message here">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 <script>
     const socket = io.connect("http://chatapp-alexapp.herokuapp.com/");
+    //const socket = io.connect("http://127.0.0.1:5000")
 
     socket.on('connect', function () {
         socket.emit('join_room', {
-            username: "{{ username }}",
-            room: "{{ room }}"
+            username: "Alex",
+            room: "general"
         });
 
         let message_input = document.getElementById('message_input');
@@ -31,8 +76,8 @@
             let message = message_input.value.trim();
             if (message.length) {
                 socket.emit('send_message', {
-                    username: "{{ username }}",
-                    room: "{{ room }}",
+                    username: "Alex",
+                    room: "general",
                     message: message
                 })
             }
@@ -43,8 +88,8 @@
 
     window.onbeforeunload = function () {
         socket.emit('leave_room', {
-            username: "{{ username }}",
-            room: "{{ room }}"
+            username: "Alex",
+            room: "general"
         })
     };
 
@@ -57,7 +102,7 @@
 
     socket.on('join_room_announcement', function (data) {
         console.log(data);
-        if (data.username !== "{{ username }}") {
+        if (data.username !== "Alex") {
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
             document.getElementById('messages').appendChild(newNode);
@@ -71,4 +116,5 @@
         document.getElementById('messages').appendChild(newNode);
     });
 </script>
+</body>
 </html>

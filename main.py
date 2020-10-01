@@ -8,7 +8,7 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 @app.route('/chat')
@@ -46,3 +46,6 @@ def handle_leave_room_event(data):
 
 if __name__ == '__main__':
     app.run()
+
+#if __name__ == "__main__":
+    #socketio.run(app, debug=True)
