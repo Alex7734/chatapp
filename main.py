@@ -44,8 +44,8 @@ def handle_leave_room_event(data):
     socketio.emit('leave_room_announcement', data, room=data['room'])
 
 
-if __name__ == '__main__':
-    app.run()
+#if __name__ == '__main__':
+    #app.run()
 
-#if __name__ == "__main__":
-    #socketio.run(app, debug=True)
+if __name__ == "__main__":
+    socketio.run(app, debug=True)
