@@ -69,8 +69,8 @@
 
     socket.on('connect', function () {
         socket.emit('join_room', {
-            username: "Alex",
-            room: "general"
+            username: {{data.username}},
+            room: {{data.room}}
         });
 
         let message_input = document.getElementById('message_input');
@@ -80,8 +80,8 @@
             let message = message_input.value.trim();
             if (message.length) {
                 socket.emit('send_message', {
-                    username: "Alex",
-                    room: "general",
+                    username: {{data.username}},
+                    room:  {{data.room}},
                     message: message
                 })
             }
@@ -92,8 +92,8 @@
 
     window.onbeforeunload = function () {
         socket.emit('leave_room', {
-            username: "Alex",
-            room: "general"
+            username: {{data.username}},
+            room: {{data.room}}
         })
     };
 
